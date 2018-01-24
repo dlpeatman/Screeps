@@ -34,9 +34,10 @@ const assignSource = function(creep, sources) {
                 sources[id].push(creep.name);
             }
             creep.memory.sourceId = id;
-            break;
+            return;
         }
     }
+    console.log("Could not find a source for " + creep.name + " among sources: " + Object.keys(sources));
 }
 module.exports = {
     run(creep) {
@@ -54,7 +55,7 @@ module.exports = {
                 sources[selectedSourceId].push(creep.name);
             }
 
-            var selectedSource = Game.getObjectById(selectedSourceId);
+            const selectedSource = Game.getObjectById(selectedSourceId);
             if (creep.harvest(selectedSource) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(selectedSource, {visualizePathStyle: PATH_STYLE});
             }
