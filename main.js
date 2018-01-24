@@ -3,9 +3,9 @@ var roleBuilder = require('role.builder');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var aiSpawnDecider = require('ai.spawn.decider');
-var aiConstructionRoads = require('ai.construction.roads');
-var aiConstructionExtensions = require('ai.construction.extensions');
-var aiConstructionTowers = require('ai.construction.towers');
+var aiConstructionRoads = require('construction.roads');
+var aiConstructionExtensions = require('construction.extensions');
+var aiConstructionTowers = require('construction.towers');
 
 module.exports.loop = function() {
     aiReaper.clean();
