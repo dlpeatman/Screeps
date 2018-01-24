@@ -34,10 +34,11 @@ const assignSource = function(creep, sources) {
                 sources[id].push(creep.name);
             }
             creep.memory.sourceId = id;
-            return;
+            return true;
         }
     }
     console.log("Could not find a source for " + creep.name + " among sources: " + Object.keys(sources));
+    return false;
 }
 module.exports = {
     run(creep) {
@@ -47,7 +48,10 @@ module.exports = {
             const sources = Memory.rooms[creep.room.name].sources;
 
             if (!creep.memory.sourceId) {
-                assignSource(creep, sources);
+                const succeeded = assignSource(creep, sources);
+                if (!succeeded) {
+                    return;
+                }
             }
             
             const selectedSourceId = creep.memory.sourceId;
