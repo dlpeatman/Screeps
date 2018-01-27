@@ -6,8 +6,9 @@ var aiSpawnDecider = require('ai.spawn.decider');
 var aiConstructionRoads = require('construction.roads');
 var aiConstructionExtensions = require('construction.extensions');
 var aiConstructionTowers = require('construction.towers');
+var towerAi = require('ai.towers');
 
-module.exports.loop = function() {
+module.exports.loop = function () {
     aiReaper.clean();
     aiConstructionExtensions.place();
     aiConstructionTowers.place();
@@ -25,6 +26,18 @@ module.exports.loop = function() {
         case 'builder':
             roleBuilder.run(creep);
             break;
+        }
+    }
+
+    for (const name in Game.rooms) {
+        const room = Game.rooms[name];
+        const towers = room.find(FIND_STRUCTURES, {
+                filter: {
+                    structureType: STRUCTURE_TOWER
+                }
+            });
+        for (const tower in towers) {
+            towerAi.run(towers[tower]);
         }
     }
 
