@@ -10,18 +10,14 @@ const STRUCTURE_FILTER = (structure) => {
 
 const populateSources = function(creep) {
     const roomName = creep.room.name;
-    const { rooms = {} } = Memory;
-    const room = rooms[roomName] || {};
-    let { sources = {} } = room;
+    const rooms = Memory.rooms || {};
+    const room = Memory.rooms[roomName] || {};
+    let sources = Memory.rooms[roomName] || {};
     if (Object.keys(sources).length === 0) {
-        sources = creep.room.find(FIND_SOURCES).reduce(function(map, source) {
-            map[source.id] = [];
-            return map;
-        }, {});
-        console.log(sources);
-        Memory.rooms = rooms;
-        Memory.rooms[roomName] = room;
-        Memory.rooms[roomName].sources = sources;
+        Object.assign(sources, creep.room.find(FIND_SOURCES).reduce((map, source) => Object.assign({
+                    [source.id]: []
+                }, map), {}));
+        console.log('Registered sources: ' + sources);
     }
 }
 
