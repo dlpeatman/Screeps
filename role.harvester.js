@@ -8,15 +8,20 @@ const STRUCTURE_FILTER = (structure) => {
 }
 
 
-const populateSources = function(creep) {
+const populateSources = function (creep) {
     const roomName = creep.room.name;
-    const rooms = Memory.rooms || {};
-    const room = Memory.rooms[roomName] || {};
-    let sources = Memory.rooms[roomName] || {};
-    if (Object.keys(sources).length === 0) {
-        Object.assign(sources, creep.room.find(FIND_SOURCES).reduce((map, source) => Object.assign({
-                    [source.id]: []
-                }, map), {}));
+    if (!Memory.rooms) {
+        Memory.rooms = {};
+    }
+    if (!Memory.rooms[roomName]) {
+        Memory.rooms[roomName] = {};
+    }
+    if (!Memory.rooms[roomName].sources) {
+        Memory.rooms[roomName].sources = {};
+    }
+    if (Object.keys(Memory.rooms[roomName].sources).length === 0) {
+        const reducer = (map, source) => Object.assign({[source.id]: []}, map);
+        Object.assign(Memory.rooms[roomName].sources, creep.room.find(FIND_SOURCES).reduce(reducer, {}));
         console.log('Registered sources: ' + sources);
     }
 }
