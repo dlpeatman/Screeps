@@ -22,12 +22,10 @@ module.exports = {
             
             if (nonRoads.length > 0) {
                 var site = nonRoads[0];
-                //console.log('Building a ' + site.structureType);
                 if (creep.build(site) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(site, {visualizePathStyle: STYLE});
                 }
             } else {
-                //console.log('Building a road');
                 var site = buildSites[0];
                 if (creep.build(site) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(site, {visualizePathStyle: STYLE});
